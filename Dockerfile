@@ -22,7 +22,6 @@ ENV JAVA_HOME /etc/alternatives/jre
 # (H)
 RUN git clone https://github.com/tm-hack/backend.git /usr/local/backend
 
-RUN java -version
 # (I)
 RUN mvn install -f /usr/local/backend/pom.xml
 
