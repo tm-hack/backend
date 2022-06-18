@@ -7,12 +7,12 @@ MAINTAINER tm-hack
 
 # (C)
 RUN yum install -y \
-    java-17-openjdk \
-    java-17-openjdk-devel \
+    java-1.8.0-openjdk \
+    java-1.8.0-openjdk-devel \
     wget tar iproute git
 
 # (D)
-RUN wget&nbsphttp://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 # (E)
 RUN sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
 # (F)
@@ -20,9 +20,11 @@ RUN yum install -y apache-maven
 # (G)
 ENV JAVA_HOME /etc/alternatives/jre
 # (H)
-RUN git clone https://github.com/debugroom/mynavi-sample-aws-ecs.git /usr/local/mynavi-sample-aws-ecs
+RUN git clone https://github.com/tm-hack/backend.git /usr/local/backend
+
+RUN java -version
 # (I)
-RUN mvn install -f /usr/local/mynavi-sample-aws-ecs/pom.xml
+RUN mvn install -f /usr/local/backend/pom.xml
 
 # (J)
 RUN cp /etc/localtime /etc/localtime.org
@@ -33,4 +35,4 @@ RUN ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 EXPOSE 8080
 
 # (M)
-CMD java -jar -Dspring.profiles.active=production /usr/local/mynavi-sample-aws-ecs/backend/target/mynavi-sample-aws-ecs-backend-0.0.1-SNAPSHOT.jar
+CMD java -jar -Dspring.profiles.active=production /usr/local/backend/target/mynavi-sample-ecs-backend-0.0.1-SNAPSHOT.jar
