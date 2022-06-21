@@ -20,10 +20,10 @@ RUN yum install -y apache-maven
 # (G)
 ENV JAVA_HOME /etc/alternatives/jre
 # (H)
-RUN git clone https://github.com/tm-hack/backend.git /usr/local/backend
+RUN git clone https://github.com/tm-hack/backend.git /var/local/backend
 
 # (I)
-RUN mvn install -f /usr/local/backend/pom.xml
+RUN mvn install -f /var/local/backend/pom.xml
 
 # (J)
 RUN cp /etc/localtime /etc/localtime.org
@@ -34,4 +34,4 @@ RUN ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 EXPOSE 8080
 
 # (M)
-CMD java -jar -Dspring.profiles.active=production /usr/local/backend/target/mynavi-sample-ecs-backend-0.0.1-SNAPSHOT.jar
+CMD java -jar -Dspring.profiles.active=production /var/local/backend/target/mynavi-sample-ecs-backend-0.0.1-SNAPSHOT.jar
